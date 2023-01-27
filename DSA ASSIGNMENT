@@ -1,0 +1,163 @@
+//QUESTION NO 1
+function findPairs(arr, sum) {
+    let pairs = [];
+    for (let i = 0; i < arr.length; i++) {
+      for (let j = i + 1; j < arr.length; j++) {
+        if (arr[i] + arr[j] === sum) {
+          pairs.push([arr[i], arr[j]]);
+        }
+      }
+    }
+    return pairs;
+  }
+  
+  let arr = [1, 5, 7, -1, 5];
+  let s = 6;
+  console.log(findPairs(arr, s));
+
+  //QUESTION NUMBER 2
+  function reverseArrayInPlace(arr) {
+    let left = 0;
+    let right = arr.length - 1;
+    while (left < right) {
+      [arr[left], arr[right]] = [arr[right], arr[left]];
+      left++;
+      right--;
+    }
+    return arr;
+  }
+  
+  let arr = [1, 2, 3, 4, 5];
+  console.log(reverseArrayInPlace(arr));
+  //QUESTION NUMBER 3
+  function isRotation(str1, str2) {
+    if (str1.length !== str2.length) {
+      return false;
+    }
+    let doubleStr1 = str1 + str1;
+    return doubleStr1.includes(str2);
+  }
+  
+  console.log(isRotation("hello", "llohe")); // true
+  console.log(isRotation("hello", "heoel")); // false
+
+  //QUESTION NUMBER 4
+
+  function firstNonRepeatedChar(str) {
+    let charCount = {};
+    for (let i = 0; i < str.length; i++) {
+      charCount[str[i]] = charCount[str[i]] + 1 || 1;
+    }
+    for (let i = 0; i < str.length; i++) {
+      if (charCount[str[i]] === 1) {
+        return str[i];
+      }
+    }
+    return null;
+  }
+  
+  console.log(firstNonRepeatedChar("hello")); // 'h'
+  console.log(firstNonRepeatedChar("abcdefg")); // 'a'
+//QUESTION NUMBER 5
+function towerOfHanoi(n, from_rod, to_rod, aux_rod) {
+    if (n === 1) {
+      console.log("Move disk 1 from rod", from_rod, "to rod", to_rod);
+      return;
+    }
+    towerOfHanoi(n - 1, from_rod, aux_rod, to_rod);
+    console.log("Move disk", n, "from rod", from_rod, "to rod", to_rod);
+    towerOfHanoi(n - 1, aux_rod, to_rod, from_rod);
+  }
+  
+  towerOfHanoi(3, "A", "C", "B");
+//QUESTION NUMBER 6
+
+function postfixToPrefix(expr) {
+    let stack = [];
+    for (let i = 0; i < expr.length; i++) {
+        if (isOperator(expr[i])) {
+            let op1 = stack.pop();
+            let op2 = stack.pop();
+            let temp = expr[i] + op2 + op1;
+            stack.push(temp);
+        } else {
+            stack.push(expr[i]);
+        }
+    }
+    return stack[0];
+}
+
+function isOperator(ch) {
+    return ch === '+' || ch === '-' || ch === '*' || ch === '/';
+}
+console.log(postfixToPrefix("23*5+")); 
+
+//QUESTION NUMBER 7
+
+function prefixToInfix(expr) {
+    let stack = [];
+    for (let i = expr.length - 1; i >= 0; i--) {
+        if (isOperator(expr[i])) {
+            let op1 = stack.pop();
+            let op2 = stack.pop();
+            let temp = "(" + op1 + expr[i] + op2 + ")";
+            stack.push(temp);
+        } else {
+            stack.push(expr[i]);
+        }
+    }
+    return stack[0];
+}
+
+function isOperator(ch) {
+    return ch === '+' || ch === '-' || ch === '*' || ch === '/';
+}
+console.log(prefixToInfix("*+2345"));
+//QUESTION NUMBER 8
+  
+function checkBrackets(code) {
+    let stack = [];
+    let pairs = { '(': ')', '[': ']', '{': '}' };
+    for (let i = 0; i < code.length; i++) {
+        if (code[i] in pairs) {
+            stack.push(code[i]);
+        } else if (code[i] === ')' || code[i] === ']' || code[i] === '}') {
+            if (stack.length === 0 || code[i] !== pairs[stack.pop()]) {
+                return false;
+            }
+        }
+    }
+    return stack.length === 0;
+}
+console.log(checkBrackets("var a = { [2*(3+4)]: 'hello' }"));
+console.log(checkBrackets("var a = { [2*(3+4): 'hello' }"));
+
+//QUESTION NUMBER 9
+function reverseStack(stack) {
+    let tempStack = [];
+    while (stack.length > 0) {
+        tempStack.push(stack.pop());
+    }
+    return tempStack;
+}
+let stack = [1, 2, 3, 4, 5];
+console.log(reverseStack(stack));
+ //QUESTION NUMBER 10
+
+ function findSmallest(stack) {
+    let min = Number.MAX_VALUE;
+    let tempStack = [];
+    while (stack.length > 0) {
+        let temp = stack.pop();
+        if (temp < min) {
+            min = temp;
+        }
+        tempStack.push(temp);
+    }
+    while (tempStack.length > 0) {
+        stack.push(tempStack.pop());
+    }
+    return min;
+}
+let stack = [5, 2, 8, 1, 9];
+console.log(findSmallest(stack));
